@@ -5,7 +5,7 @@
 
 # dotenv files
 .env
-
+passenger_data.txt
 # User-specific files
 *.rsuser
 *.suo
