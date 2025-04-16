@@ -6,6 +6,7 @@ public class consoleUI
     FileSaver filesaver;
     List<Loop> loops;
     List<Stop> stops;
+    List<Driver> drivers;
 
     public consoleUI()
     {
@@ -28,6 +29,12 @@ public class consoleUI
         loops[0].Stops.Add(stops[3]);
         loops[0].Stops.Add(stops[4]);
 
+        drivers = new List<Driver>();
+        drivers.Add(new Driver("Jill"));
+        drivers.Add(new Driver("Nathalia"));
+        drivers.Add(new Driver("Pauline"));
+
+
     }
     public void show()
     {
@@ -39,12 +46,22 @@ public class consoleUI
                 "driver", "manager"
         }));
         if(mode == "driver"){
+
             string command;
+
+            Driver DriverName = AnsiConsole.Prompt(
+                    new SelectionPrompt<Driver>()
+                    .Title("Select the driver:")
+                    .PageSize(10)
+                    .AddChoices(drivers));
+            Console.WriteLine("You are now driving as " + DriverName.Name);
+
             Loop SelectedLoop = AnsiConsole.Prompt(
                     new SelectionPrompt<Loop>()
                     .Title("Select a loop:")
                     .PageSize(10)
                     .AddChoices(loops));
+            Console.WriteLine("You selected " + SelectedLoop.Name + " loop.");
             do
             {
                 Stop SelectedStop = AnsiConsole.Prompt(
@@ -52,9 +69,12 @@ public class consoleUI
                     .Title("Select a stop:")
                     .PageSize(10)
                     .AddChoices(SelectedLoop.Stops));
+                Console.WriteLine("You selected " + SelectedStop.Name + " stop.");
 
                 int boarded = int.Parse(AskForInput("Enter the number of boarded passengers: "));
-                filesaver.AppendLine(SelectedStop.Name + ": " + boarded);
+
+                PassengerData Collected_Data = new PassengerData(boarded, SelectedStop, SelectedLoop, DriverName);
+                filesaver.AppendData(Collected_Data);
                 
                     command = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
