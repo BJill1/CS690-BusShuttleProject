@@ -3,15 +3,11 @@ using Spectre.Console;
 
 public class consoleUI
 {
-    FileSaver filesaver;
     DataManager data_manager;
 
     public consoleUI()
     {
-        filesaver = new FileSaver("passenger_data.txt");
         data_manager = new DataManager();
-
-
     }
     public void show()
     {
@@ -48,10 +44,13 @@ public class consoleUI
                     .AddChoices(SelectedLoop.Stops));
                 Console.WriteLine("You selected " + SelectedStop.Name + " stop.");
 
-                int boarded = int.Parse(AskForInput("Enter the number of boarded passengers: "));
+                int boarded = AnsiConsole.Prompt(
+                                new TextPrompt<int>("Enter the number of boarded passengers: "));
 
                 PassengerData Collected_Data = new PassengerData(boarded, SelectedStop, SelectedLoop, DriverName);
-                filesaver.AppendData(Collected_Data);
+                
+                
+                data_manager.AddNewPassengerData(Collected_Data);
                 
                     command = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -63,9 +62,9 @@ public class consoleUI
             } while(command != "end");
         }
     }
-    public static string AskForInput(string message)
-    {
-        Console.Write(message);
-        return Console.ReadLine();
-    }
+    //public static string AskForInput(string message)
+    //{
+      //  Console.Write(message);
+       // return Console.ReadLine();
+   // }
 }

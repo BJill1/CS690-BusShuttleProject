@@ -5,9 +5,12 @@ public class DataManager
     public List<Loop> Loops { get; }
     public List<Stop> Stops { get; }
     public List<Driver> Drivers { get; }
+    public List<PassengerData> passenger_data { get; }
+    FileSaver filesaver;
 
     public DataManager()
     {
+        filesaver = new FileSaver("passenger_data.txt");
         Loops = new List<Loop>();
         Loops.Add(new Loop("Red"));
         Loops.Add(new Loop("Green"));
@@ -30,5 +33,11 @@ public class DataManager
         Drivers.Add(new Driver("Jill"));
         Drivers.Add(new Driver("Nathalia"));
         Drivers.Add(new Driver("Pauline"));
+        passenger_data = new List<PassengerData>();
+    }
+    public void AddNewPassengerData(PassengerData data)
+    {
+        this.passenger_data.Add(data);
+        this.filesaver.AppendData(data);
     }
 }
