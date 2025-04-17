@@ -18,7 +18,8 @@ public class consoleUI
             .AddChoices(new[]{
                 "driver", "manager"
         }));
-        if(mode == "driver"){
+        if(mode == "driver")
+        {
 
             string command;
 
@@ -59,6 +60,43 @@ public class consoleUI
                     .AddChoices(new[]{
                     "end", "continue"
                 }));
+
+            } while(command != "end");
+        }
+        
+        if(mode == "manager")
+        {
+            string command;
+            do{
+                command = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                    .Title("What do you want to do")
+                    .PageSize(10)
+                    .AddChoices(new[]{
+                    "add stop", "delete stop", "list stops", "end"
+                }));
+                if(command == "add stop"){
+                    var NewStopName = AnsiConsole.Prompt(new TextPrompt<string>("Enter new stop name: "));
+                    data_manager.AddStop(new Stop(NewStopName));
+ 
+                }
+                else if(command == "delete stop"){
+                    Stop StopToDelete = AnsiConsole.Prompt(
+                    new SelectionPrompt<Stop>()
+                    .Title("Select a stop to delete:")
+                    .PageSize(10)
+                    .AddChoices(data_manager.Stops));
+                    Console.WriteLine("You want to delete the " + data_manager.Stops);
+                    data_manager.RemoveStop(StopToDelete);
+                }
+                else if(command == "list stops"){
+                    var table = new Table();
+                    table.AddColumn("Stop Name");
+                    foreach(var stop in data_manager.Stops){
+                        table.AddRow(stop.Name);
+                    }
+                    AnsiConsole.Write(table);
+                }
             } while(command != "end");
         }
     }
