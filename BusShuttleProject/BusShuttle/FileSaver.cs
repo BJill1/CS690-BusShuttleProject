@@ -6,7 +6,10 @@ public class FileSaver
     public FileSaver(string FileName)
     {
         this.FileName = FileName;
-        File.Create(this.FileName).Close();
+        if(!File.Exists(this.FileName)){
+            File.Create(this.FileName).Close();
+        }
+        
     }
     public void AppendLine(string line)
     {
