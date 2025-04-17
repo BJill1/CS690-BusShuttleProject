@@ -38,4 +38,18 @@ public class DataManager
         this.passenger_data.Add(data);
         this.filesaver.AppendData(data);
     }
+    public void SynchronizeStops(){
+        File.Delete("Stops.txt");
+        foreach(var stop in Stops){
+            File.AppendAllText("Stops.txt", stop.Name + Environment.NewLine);
+        }
+    }
+    public void AddStop(Stop stop){
+        Stops.Add(stop);
+        SynchronizeStops();
+    }
+    public void RemoveStop(Stop stop){
+        Stops.Remove(stop);
+        SynchronizeStops();
+    }
 }
