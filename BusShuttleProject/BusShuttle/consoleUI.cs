@@ -62,9 +62,5 @@ public class consoleUI
             } while(command != "end");
         }
     }
-    //public static string AskForInput(string message)
-    //{
-      //  Console.Write(message);
-       // return Console.ReadLine();
-   // }
+
 }

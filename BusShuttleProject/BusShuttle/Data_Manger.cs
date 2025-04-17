@@ -17,17 +17,15 @@ public class DataManager
         Loops.Add(new Loop("Blue"));
 
         Stops = new List<Stop>();
-        Stops.Add(new Stop("Music"));
-        Stops.Add(new Stop("Tower"));
-        Stops.Add(new Stop("Oakwood"));
-        Stops.Add(new Stop("Anthony"));
-        Stops.Add(new Stop("Letterman"));
+        var StopsFileContent = File.ReadAllLines("Stops.txt");
+        foreach(var stop_name in StopsFileContent){Stops.Add(new Stop(stop_name));}
 
         Loops[0].Stops.Add(Stops[0]);
         Loops[0].Stops.Add(Stops[1]);
         Loops[0].Stops.Add(Stops[2]);
         Loops[0].Stops.Add(Stops[3]);
         Loops[0].Stops.Add(Stops[4]);
+        Loops[0].Stops.Add(Stops[5]);
 
         Drivers = new List<Driver>();
         Drivers.Add(new Driver("Jill"));
